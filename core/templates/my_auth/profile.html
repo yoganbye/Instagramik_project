@@ -1,0 +1,9 @@
+{% extends 'core/layout.html' %}
+    {% block unique_content %}
+        <div>
+            {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" style="width: 450px; height: 450px;">
+            {% endif %}
+            {{ profile.about }}
+        </div>
+    {% endblock unique_content %}

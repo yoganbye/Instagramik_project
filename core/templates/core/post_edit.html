@@ -1,0 +1,15 @@
+{% extends 'core/layout.html' %}
+    {% block unique_content %}
+
+        {% if post.author != user %}
+            <h2>Редактировать пост может только его Автор</h2>
+        {% else %}
+            <form method='post', enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type='submit'> Принять изменения </button>
+            </form>
+            <a href="{% url 'post_delete' post.id %}">Удалить пост</a>
+        {% endif %}
+
+    {% endblock unique_content %}

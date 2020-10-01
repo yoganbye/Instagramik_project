@@ -1,0 +1,31 @@
+{% extends 'core/layout.html' %}
+    {% block unique_content %}
+
+        <p>{{ post.author }}</p>
+        <p>{{ post.date_pub }}</p>
+        <p><img alt='post image' src='{{ post.image.url}}' style="width: 450px; height: 450px;"></p>
+        <p>{{ post.description }}</p>
+
+        <p>Likes: {{ post.likes.count }}</p>   
+        <p>        
+            <form method="post" action="{% url 'like_post' post.id %}">
+                {% csrf_token %}
+                <button type='submit'Like>Like</button>
+            </form>
+        </p> 
+        
+        <p>
+            {% for comment in comments %}
+                <p><a href="{% url 'profile' comment.author.id %}">{{ comment.author }}:</a></p>
+                <p>{{ comment.text }}</p>
+            {% endfor %}  
+        </p>
+        <p>
+            <form method='POST' enctype='multipart/form-data'>
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type='submit'>Комментарий</button>
+            </form> 
+        </p>   
+   
+    {% endblock unique_content %}

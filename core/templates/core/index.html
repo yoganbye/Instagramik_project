@@ -1,0 +1,33 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+
+{%block static_block %}
+    <link rel='stylesheet' type='text/css' href='{% static "core/css/index.css" %}'>
+{% endblock static_block %}
+
+    {% block unique_content %}
+
+        {% if posts %}
+            <ul class="main-list">
+                {% for post in posts %}
+                    <li>
+                        <a href='{% url "profile" post.author.id %}'>{{ post.author }}</a>
+                        <p>{{ post.date_pub }}</p>
+                        <a href='{% url "post_detail" post.id %}'>
+                            <p>
+                                <img alt="post's image" src="{{ post.image.url }}" 
+                                style="width:250px; height: 250px;">
+                            </p>
+                        </a>
+                        <p>{{ post.description }}</p>
+                        <p>Likes: {{ post.likes.count }}</p>
+                        <form method="post" action="{% url 'like_post' post.id %}">
+                            {% csrf_token %}
+                            <button type='submit'>Like</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+    {% endif %}
+
+    {% endblock unique_content %}
